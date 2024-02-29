@@ -1,15 +1,28 @@
-import sumar from "./sumador";
+// presenter.js
+import contarLetras from "./contarLetras";
 
-const first = document.querySelector("#primer-numero");
-const second = document.querySelector("#segundo-numero");
-const form = document.querySelector("#sumar-form");
+const nombreInput = document.querySelector("#nombre");
+const form = document.querySelector("#contarLetras-form");
 const div = document.querySelector("#resultado-div");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const firstNumber = Number.parseInt(first.value);
-  const secondNumber = Number.parseInt(second.value);
+  div.innerHTML = ""; // Limpiar el contenido anterior
 
-  div.innerHTML = "<p>" + sumar(firstNumber, secondNumber) + "</p>";
+  const nombre = nombreInput.value;
+
+  if (nombre.length > 0) {
+    const resultado = contarLetras(nombre);
+    mostrarResultado(resultado);
+  } else {
+    console.error("Por favor, ingrese un nombre válido.");
+  }
 });
+
+function mostrarResultado(resultado) {
+  for (const letra in resultado) {
+    const mensaje = `<p>${letra}: ${resultado[letra]}</p>`;
+    div.innerHTML += mensaje;
+  }
+}
